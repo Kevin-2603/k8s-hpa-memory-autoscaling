@@ -28,15 +28,20 @@ Proyek ini mengimplementasikan **Horizontal Pod Autoscaler (HPA)** di Kubernetes
 ```
 
 ## How to Run
-1. Deploy Metrics Server (Prerequisite):
+1. Clone repository
+```bash
+git clone https://github.com/Kevin-2603/k8s-hpa-memory-autoscaling.git
+cd k8s-hpa-memory-autoscaling
+```
+2. Deploy Metrics Server (Prerequisite):
 ```bash
 kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
 ```
-2. Apply Manifests:
+3. Apply Manifests:
 ```bash
 kubectl apply -f manifests/
 ```
-3. Check Status:
+4. Check Status:
 ```bash
 kubectl get deployment,hpa
 ```
