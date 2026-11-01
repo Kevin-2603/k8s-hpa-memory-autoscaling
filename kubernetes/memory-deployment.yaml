@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: memory-workload
+  namespace: hpa-lab
+  labels:
+    app: memory-workload
+    app.kubernetes.io/part-of: memory-autoscaling
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: memory-workload
+  template:
+    metadata:
+      labels:
+        app: memory-workload
+    spec:
+      containers:
+        - name: memory-workload
+          image: memory-workload:v2
+          imagePullPolicy: Never
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+          resources:
+            requests:
+              memory: "100Mi"
+              cpu: "100m"
+            limits:
+              memory: "200Mi"
+              cpu: "200m"
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: http
+            initialDelaySeconds: 3
+            periodSeconds: 5
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: http
+            initialDelaySeconds: 5
+            periodSeconds: 10
